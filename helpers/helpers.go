@@ -1,5 +1,10 @@
 package helpers
 
+import (
+	"regexp"
+	"strings"
+)
+
 // EqualSlices - Сравнения двух срезов
 func EqualSlices(a, b []string) bool {
 	if len(a) == 0 && len(b) == 0 {
@@ -24,4 +29,27 @@ func StringInSlice(a string, list []string) bool {
 		}
 	}
 	return false
+}
+
+// CheckSubstrings - Вхождение строки из массива в другую строку(?)
+// https://stackoverflow.com/questions/47131996/go-how-to-check-if-a-string-contains-multiple-substrings
+func CheckSubstrings(str string, subs ...string) (bool, int) {
+	matches := 0
+	isCompleteMatch := true
+
+	for _, sub := range subs {
+		if strings.Contains(str, sub) {
+			matches++
+		} else {
+			isCompleteMatch = false
+		}
+	}
+
+	return isCompleteMatch, matches
+}
+
+// CheckSubstringsRegexp - Вхождение строки из массива в другую строку только на регулярках
+func CheckSubstringsRegexp(str string, subs ...string) bool {
+	var re = regexp.MustCompile(strings.Join(subs[:], "|"))
+	return re.MatchString(str)
 }
