@@ -1,6 +1,8 @@
 package helpers
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"regexp"
 	"strings"
 )
@@ -52,4 +54,11 @@ func CheckSubstrings(str string, subs ...string) (bool, int) {
 func CheckSubstringsRegexp(str string, subs ...string) bool {
 	var re = regexp.MustCompile(strings.Join(subs[:], "|"))
 	return re.MatchString(str)
+}
+
+// MD5 - Ну
+func MD5(str string) string {
+	hash := md5.Sum([]byte(str))
+	state := hex.EncodeToString(hash[:])
+	return state
 }
