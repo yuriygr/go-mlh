@@ -80,9 +80,10 @@ func TestExtractHashtags(t *testing.T) {
 		{"Deduplicate", `#jedi #jedi #jedi`, []string{"jedi"}},
 		{"Number #1", `#1`, []string{"1"}},
 		{"With numbers", `#1 #42answer`, []string{"1", "42answer"}},
-		{"With slash", `#one_two_ #_three_`, []string{"one_two_"}},
+		{"With slash", `#one_two_ #_three_`, []string{"one_two_", "_three_"}},
 		{"Polka dot", `#polka:dot #:more_dots`, []string{"polka"}},
 		{"Only _", `#____`, []string{}},
+		{"Кирилл", `#почта #пришла`, []string{"почта", "пришла"}},
 	}
 
 	for _, tc := range testCases {
